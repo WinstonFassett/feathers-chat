@@ -1,7 +1,7 @@
 import { Paginated } from '@feathersjs/feathers/lib';
 import { useEffect, useRef, useState } from 'react';
 import { client } from '../feathers';
-import { MessagesResult } from 'feathers-chat'
+import { MessageData } from 'feathers-chat'
 
 const formatDate = (timestamp: number) => new Intl.DateTimeFormat('en-US', {
   timeStyle: 'short',
@@ -9,7 +9,7 @@ const formatDate = (timestamp: number) => new Intl.DateTimeFormat('en-US', {
 }).format(new Date(timestamp))
 
 export function Messages () {
-  const [messages, setMessages] = useState<MessagesResult[]>([]);
+  const [messages, setMessages] = useState<MessageData[]>([]);
   const messagesEndRef = useRef(null)
 
   useEffect(() => {
@@ -19,7 +19,7 @@ export function Messages () {
           $sort: { createdAt: -1 },
           $limit: 25
         }
-      })) as any as Paginated<MessagesResult>
+      })) as any as Paginated<MessageData>
   
       setMessages(data.reverse())
     }
@@ -29,7 +29,7 @@ export function Messages () {
 
   
   useEffect(() => {
-    client.service('messages').once('created', (message: MessagesResult) =>
+    client.service('messages').once('created', (message: MessageData) =>
       setMessages(messages.concat(message))
     )
     

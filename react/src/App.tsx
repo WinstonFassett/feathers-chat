@@ -3,13 +3,13 @@ import { Chat } from './components/Chat';
 
 import { Login } from './components/Login';
 import { client } from './feathers';
-import { UsersResult } from 'feathers-chat'
+import { UserData } from 'feathers-chat/lib/client'
 
 function App() {
-  const [user, setUser] = useState<UsersResult|null>(null)
+  const [user, setUser] = useState<UserData|null>(null)
   
   useEffect(() => {
-    client.on('login', ({ user }: { user: UsersResult }) => setUser(user));
+    client.on('login', ({ user }: { user: UserData }) => setUser(user));
     client.on('logout', () => setUser(null));
     client.reAuthenticate();
   }, []);

@@ -1,11 +1,11 @@
 import { Paginated } from '@feathersjs/feathers';
 import React, { useEffect, useState } from 'react';
-import { UsersResult } from 'feathers-chat';
+import { UserData } from 'feathers-chat';
 import { client } from '../feathers';
 import { Messages } from './Messages';
 
 export function Chat () {
-  const [users, setUsers] = useState<UsersResult[]>([]);
+  const [users, setUsers] = useState<UserData[]>([]);
   const [messageText, setMessageText] = useState<string>('');
   const logout = () => client.logout();
   const sendMessage = async (ev: React.FormEvent<HTMLFormElement>) => {
@@ -18,7 +18,7 @@ export function Chat () {
 
   useEffect(() => {
     const findUsers = async () => {
-      const { data } = (await client.service('users').find({})) as any as Paginated<UsersResult>
+      const { data } = (await client.service('users').find({})) as any as Paginated<UserData>
   
       setUsers(data)
     }
@@ -35,7 +35,7 @@ export function Chat () {
     <div className='drawer-side'><label htmlFor='drawer-left' className='drawer-overlay'></label>
       <ul className='menu compact p-2 overflow-y-auto w-60 bg-base-300 text-base-content'>
         <li className='menu-title'><span>Users</span></li>
-        {users.map(user => <li key={user.id}>
+        {users.map(user => <li key={(user as any).id}>
           <a>
             <div className='avatar indicator'>
               <div className='w-6 rounded'><img src={user.avatar} alt={user.email} /></div>
