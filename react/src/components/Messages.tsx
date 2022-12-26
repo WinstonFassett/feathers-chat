@@ -40,7 +40,7 @@ export function Messages () {
 
 
   return <div className='h-full overflow-y-auto px-3'>
-    {messages.map(({ id, text, createdAt, user }) => <div key={id} className="message flex flex-row pt-2 pb-3 relative transition-colors duration-300 hover:bg-base-200">
+    {messages.map(({ id, text, createdAt, user }: any) => <div key={id} className="message flex flex-row pt-2 pb-3 relative transition-colors duration-300 hover:bg-base-200">
       <div className="avatar indicator">
         <div className="h-10 w-10 sm:w-12 sm:h-12 rounded"><img alt={user.email} src={user.avatar} /></div>
       </div>

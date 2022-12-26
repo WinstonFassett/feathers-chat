@@ -4,7 +4,7 @@ import authentication from '@feathersjs/authentication-client';
 import { createClient } from 'feathers-chat';
 
 const connection = socketio(io('http://localhost:3030'));
-const client = createClient(connection);
+const client = createClient(connection as any);
 
 client.configure(authentication() as any);
 
